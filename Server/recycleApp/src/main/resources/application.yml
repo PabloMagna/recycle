@@ -30,5 +30,3 @@ server:
   port: 8088
 
 
-  #database-platform: ${DB_PLATFORM}
-
