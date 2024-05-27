@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3308/recycledb?serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: root
+    password: 1234
+  application:
+    name: recycle
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/recycle-realm
+          jwk-set-uri: http://localhost:9090/realms/recycle-realm/protocol/openid-connect/certs
+
+jwt:
+  auth:
+    converter:
+      principle-attribute: preferred_username
+      resource-id: client-recycle
+
+
+server:
+  port: 8088
+
+
+  #database-platform: ${DB_PLATFORM}
+

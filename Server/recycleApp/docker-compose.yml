@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  recycledb:
+    container_name: recycledb
+    image: mysql:8.0.33
+    ports:
+      - "3308:3306" # Map 3308 on host to 3306 on container
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_PASSWORD: 1234
+      MYSQL_DATABASE: recycledb
+    networks:
+      - recycle
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+
+  keycloak:
+    container_name: keycloack
+    image: quay.io/keycloak/keycloak:24.0.2
+    ports:
+      - "9090:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - recycle
+    command:
+      - "start-dev"
+
+networks:
+  recycle:
+
+volumes:
+  recycledb_data:
+  keycloak_data:
+
