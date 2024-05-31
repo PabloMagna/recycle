@@ -19,7 +19,7 @@ public class PruebaController {
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('USER')")
+    //@PreAuthorize("hasRole('USER')")
     public ResponseEntity<Prueba> traerPrueba(@PathVariable Integer id, Authentication jwt) {
         Prueba prueba = service.traerPrueba(id, jwt);
         if (prueba != null) {

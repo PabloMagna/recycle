@@ -6,6 +6,7 @@ import com.recycle.recycleapp.security.JwtService;
 import com.recycle.recycleapp.user.UserEntity;
 import com.recycle.recycleapp.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +26,8 @@ public class AuthenticationService {
     private final RoleRepository roleRepository;
 
     public void register(RegistrationRequest request) {
-        if(userRepository.findByEmail(request.getEmail()) != null){
+        UserEntity userEntity = userRepository.findByEmail(request.getEmail()).orElse(null);
+        if( userEntity != null){
             throw new OperationNotPermittedException("Email already registered!");
         }
 
